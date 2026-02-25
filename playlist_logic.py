@@ -198,6 +198,12 @@ def lucky_pick(
     mode: str = "any",
 ) -> Optional[Song]:
     # Support a dedicated mixed mode and include mixed songs in any mode.
+    all_songs = (
+        playlists.get("Hype", [])
+        + playlists.get("Chill", [])
+        + playlists.get("Mixed", [])
+    )
+
     if mode == "hype":
         songs = playlists.get("Hype", [])
     elif mode == "chill":
@@ -205,11 +211,10 @@ def lucky_pick(
     elif mode == "mixed":
         songs = playlists.get("Mixed", [])
     else:
-        songs = (
-            playlists.get("Hype", [])
-            + playlists.get("Chill", [])
-            + playlists.get("Mixed", [])
-        )
+        songs = all_songs
+
+    if not songs:
+        songs = all_songs
 
     return random_choice_or_none(songs)
 
@@ -217,9 +222,6 @@ def lucky_pick(
 def random_choice_or_none(songs: List[Song]) -> Optional[Song]:
     """Return a random song or None."""
     import random
-
-    if not songs:
-        return None
 
     return random.choice(songs)
 
