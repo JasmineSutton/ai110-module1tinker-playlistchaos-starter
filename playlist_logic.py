@@ -1,3 +1,4 @@
+from fnmatch import fnmatch
 from typing import Dict, List, Optional, Tuple
 
 Song = Dict[str, object]
@@ -13,17 +14,31 @@ DEFAULT_PROFILE = {
 
 
 def normalize_title(title: str) -> str:
-    """Normalize a song title for comparisons."""
+    #If there's no title, return empty string
     if not isinstance(title, str):
         return ""
     return title.strip()
 
-
+#Normalize the artist for title casing
 def normalize_artist(artist: str) -> str:
-    """Normalize an artist name for comparisons."""
+    #If there's no artist, return empty string
     if not artist:
         return ""
-    return artist.strip().lower()
+
+    #For each word in the artist, if it's all uppercase, keep it as is, otherwise title case it
+    words = artist.strip().split()
+    normalized_words: List[str] = []
+
+    #Iterate through the words in the artist name
+    for word in words:
+        #if the word is all uppercase, keep it as is, otherwise title case it
+        if word.isupper():
+            normalized_words.append(word)
+        else:
+            normalized_words.append(word.capitalize())
+
+    #return the normalized artist name as a single string
+    return " ".join(normalized_words)
 
 
 def normalize_genre(genre: str) -> str:
@@ -160,15 +175,21 @@ def search_songs(
     field: str = "artist",
 ) -> List[Song]:
     """Return songs matching the query on a given field."""
-    if not query:
+    q = query.lower().strip() if query else ""
+    if not q:
         return songs
 
-    q = query.lower().strip()
     filtered: List[Song] = []
 
     for song in songs:
         value = str(song.get(field, "")).lower()
-        if value and value in q:
+        if not value:
+            continue
+        if "*" in q or "?" in q:
+            if fnmatch(value, q):
+                filtered.append(song)
+            continue
+        if q in value:
             filtered.append(song)
 
     return filtered
@@ -178,13 +199,20 @@ def lucky_pick(
     playlists: PlaylistMap,
     mode: str = "any",
 ) -> Optional[Song]:
-    """Pick a song from the playlists according to mode."""
+    #Added "mixed" as an option for mode, and if it's selected, return a random song from the "Mixed" playlist
     if mode == "hype":
         songs = playlists.get("Hype", [])
     elif mode == "chill":
         songs = playlists.get("Chill", [])
+    elif mode == "mixed":
+        songs = playlists.get("Mixed", [])
     else:
-        songs = playlists.get("Hype", []) + playlists.get("Chill", [])
+        #Added "Mixed" playlist to the list of songs to choose from if mode is "any"
+        songs = (
+            playlists.get("Hype", [])
+            + playlists.get("Chill", [])
+            + playlists.get("Mixed", [])
+        )
 
     return random_choice_or_none(songs)
 

@@ -210,10 +210,17 @@ def profile_sidebar():
             value=int(profile.get("chill_max_energy", 3)),
         )
 
+    genre_options = ["rock", "lofi", "pop", "jazz", "electronic", "ambient", "other"]
+    current_genre = str(profile.get("favorite_genre", "other"))
+    genre_index = (
+        genre_options.index(current_genre)
+        if current_genre in genre_options
+        else len(genre_options) - 1
+    )
     profile["favorite_genre"] = st.sidebar.selectbox(
         "Favorite genre",
-        options=["rock", "lofi", "pop", "jazz", "electronic", "ambient", "other"],
-        index=0,
+        options=genre_options,
+        index=genre_index,
     )
 
     profile["include_mixed"] = st.sidebar.checkbox(
@@ -299,7 +306,7 @@ def lucky_section(playlists):
 
     mode = st.selectbox(
         "Pick from",
-        options=["any", "hype", "chill"],
+        options=["any", "hype", "chill", "mixed"],
         index=0,
     )
 
