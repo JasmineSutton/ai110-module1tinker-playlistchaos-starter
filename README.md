@@ -114,10 +114,20 @@ When you finish, Playlist Chaos will feel more predictable, and you will have ta
 
 
 ---
-TF Feedback:
+##TF Feedback:
+
 It was suggested that GitHub student be applied for. Is there a liason for GitHub? I've been rejected several times and contacting via email doesn't help. This either shouldn't be a required element of the class or we need a direct representative that can actually help. 
 
 I had several issues with streamlit installation. I did this on two machines and I had issues on both. 
+
+The core concept students needed to understand
+	- Student's are expected to partner with AI to help troubleshoot a web application with bugs. 
+- Where students are most likely to struggle
+	- Provided in the summary above.
+- Where AI was helpful vs. misleading
+	- The AI didn't fully understand the purpose of the app. I asked it to help identify potential issues and it wanted to remove some error exceptions, thinking they were useless. When I asked about the intended functionality, it admitted that the error handling had been necessary after all. 
+- One way you would guide a student without giving the answer.
+	- I would have students ask the AI companions for the lines of code it suggests be changed and walk through the code line by line to get a good understanding of what's currently happening before any changes are to be made. I would also encourage that they play with alterations instead of just asking AI to change it for them. 
 
 Searching for artist, you must type the artist completely; the artist queen will not show for quee, for example. The songs all seem to be in the correct playlists. Lucky mode doesn't seem to include the mixed list, only Hype and Chill. I've fixed the search feature by adding in wildcard capabilities so the user can search without knowing a full title. I fixed the Lucky list to include the mixed playlist. I also included title casing for the artists. Refactored the code to change the comments to the # format.
 
