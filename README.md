@@ -111,3 +111,13 @@ If you finish early or want an extra challenge, try one of these:
 - Stay curious. The unpredictability is intentional and part of the experience.
 
 When you finish, Playlist Chaos will feel more predictable, and you will have taken your first steps into AI-assisted debugging.
+
+
+---
+TF Feedback:
+It was suggested that GitHub student be applied for. Is there a liason for GitHub? I've been rejected several times and contacting via email doesn't help. This either shouldn't be a required element of the class or we need a direct representative that can actually help. 
+
+I had several issues with streamlit installation. I did this on two machines and I had issues on both. 
+
+Searching for artist, you must type the artist completely; the artist queen will not show for quee, for example. The songs all seem to be in the correct playlists. Lucky mode doesn't seem to include the mixed list, only Hype and Chill. I've fixed the search feature by adding in wildcard capabilities so the user can search without knowing a full title. I fixed the Lucky list to include the mixed playlist. I also included title casing for the artists. Refactored the code to change the comments to the # format.
+
