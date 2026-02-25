@@ -14,30 +14,28 @@ DEFAULT_PROFILE = {
 
 
 def normalize_title(title: str) -> str:
-    #If there's no title, return empty string
+    # Return empty string when title is missing or not text.
     if not isinstance(title, str):
         return ""
     return title.strip()
 
-#Normalize the artist for title casing
+
 def normalize_artist(artist: str) -> str:
-    #If there's no artist, return empty string
+    # Return empty string when artist is missing.
     if not artist:
         return ""
 
-    #For each word in the artist, if it's all uppercase, keep it as is, otherwise title case it
+    # Preserve fully uppercase tokens (e.g., "DJ", "M83") and title-case others.
     words = artist.strip().split()
     normalized_words: List[str] = []
 
-    #Iterate through the words in the artist name
     for word in words:
-        #if the word is all uppercase, keep it as is, otherwise title case it
         if word.isupper():
             normalized_words.append(word)
         else:
             normalized_words.append(word.capitalize())
 
-    #return the normalized artist name as a single string
+    # Join words back into a normalized artist string.
     return " ".join(normalized_words)
 
 
@@ -199,7 +197,7 @@ def lucky_pick(
     playlists: PlaylistMap,
     mode: str = "any",
 ) -> Optional[Song]:
-    #Added "mixed" as an option for mode, and if it's selected, return a random song from the "Mixed" playlist
+    # Support a dedicated mixed mode and include mixed songs in any mode.
     if mode == "hype":
         songs = playlists.get("Hype", [])
     elif mode == "chill":
@@ -207,7 +205,6 @@ def lucky_pick(
     elif mode == "mixed":
         songs = playlists.get("Mixed", [])
     else:
-        #Added "Mixed" playlist to the list of songs to choose from if mode is "any"
         songs = (
             playlists.get("Hype", [])
             + playlists.get("Chill", [])
@@ -220,6 +217,9 @@ def lucky_pick(
 def random_choice_or_none(songs: List[Song]) -> Optional[Song]:
     """Return a random song or None."""
     import random
+
+    if not songs:
+        return None
 
     return random.choice(songs)
 
